@@ -31,9 +31,17 @@ services:
     restart: unless-stopped
     image: redis:7.0.5-alpine 
     expose:
-        - 6379
+      - 6379
     depends_on:
       - mongodb
 
-volumes:
-  data:
+  mongoimport:
+    container_name: mongoimport
+    image: mongo:latest
+    volumes:
+      - ./backend/data:/data
+    depends_on:
+      - mongodb
+    command: ["mongoimport", "--host", "mongodb", "--db", "wanderlust", "--collection", "posts", "--file", "/data/sample_posts.json", "--jsonArray"]
+    entrypoint: []
+
