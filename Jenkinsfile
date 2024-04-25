@@ -23,8 +23,8 @@ pipeline {
                     echo "deploy the app"
                     def dockerComposeCmd = "docker-compose up -d --build"
                     sshagent(['ec2-server-key']) {
-                        sh 'scp docker-compose.yaml ec2-user@3.143.254.53:/home/ec2-user'
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@3.143.254.53 '${dockerComposeCmd}'"
+                        sh 'scp docker-compose.yaml ubuntu@3.145.184.217:/home/ubuntu'
+                        sh "ssh -o StrictHostKeyChecking=no ubuntu@3.145.184.217 '${dockerComposeCmd}'"
                     }
                 }
             }
