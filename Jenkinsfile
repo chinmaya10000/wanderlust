@@ -21,7 +21,7 @@ pipeline {
                             sh 'docker push chinmayapradhan/backend:1.0'
                         }
                         dir('./frontend') {
-                           sh 'docker build -t chinmayapradhan/frotend:1.0 .'
+                           sh 'docker build -t chinmayapradhan/frontend:1.0 .'
                            sh "echo $PASS | docker login -u $USER --password-stdin"
                            sh 'docker push chinmayapradhan/frontend:1.0' 
                         }
