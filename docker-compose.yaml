@@ -12,7 +12,7 @@ services:
     container_name: backend
     image: chinmayapradhan/backend:1.0
     env_file:
-      - ./backend/.env.docker
+      - ./.env.docker
     ports:
       - "5000:5000"
     depends_on:
@@ -22,7 +22,7 @@ services:
     container_name: frontend
     image: chinmayapradhan/frotend:1.0
     env_file:
-      - ./frontend/.env.sample
+      - ./.env.sample
     ports:
       - "5173:5173"
 
