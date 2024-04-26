@@ -15,12 +15,12 @@ pipeline {
                 script {
                     echo "Build and push image"
                     withCredentials([usernamePassword(credentialsId: 'dockerhub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                        dir('./wanderlust/backend') {
+                        dir('./backend') {
                             sh 'docker build -t chinmayapradhan/backend:1.0 .'
                             sh "echo $PASS | docker login -u $USER --passwd-stdin"
                             sh 'docker push chinmayapradhan/backend:1.0'
                         }
-                        dir('./wanderlust/frontend') {
+                        dir('./frontend') {
                            sh 'docker build -t chinmayapradhan/frotend:1.0 .'
                            sh "echo $PASS | docker login -u $USER --passwd-stdin"
                            sh 'docker push chinmayapradhan/frotend:1.0' 
