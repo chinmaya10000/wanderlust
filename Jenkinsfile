@@ -3,13 +3,6 @@ pipeline {
     agent any
 
     stages {
-        stage('build') {
-            steps {
-                script {
-                    echo "build the app"
-                }
-            }
-        }
         stage("test") {
             steps {
                 script {
@@ -17,14 +10,33 @@ pipeline {
                 }
             }
         }
+        stage('build and push image') {
+            steps {
+                script {
+                    echo "Build and push image"
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                        dir('./wanderlust/backend') {
+                            sh 'docker build -t chinmayapradhan/backend:1.0 .'
+                            sh "echo $PASS | docker login -u $USER --passwd-stdin"
+                            sh 'docker push chinmayapradhan/backend:1.0'
+                        }
+                        dir('./wanderlust/frontend') {
+                           sh 'docker build -t chinmayapradhan/frotend:1.0 .'
+                           sh "echo $PASS | docker login -u $USER --passwd-stdin"
+                           sh 'docker push chinmayapradhan/frotend:1.0' 
+                        }
+                    }
+                }
+            }
+        }
         stage("deploy") {
             steps {
                 script {
                     echo "deploy the app"
-                    def dockerComposeCmd = "docker-compose up -d --build"
+                    def dockerComposeCmd = "docker-compose up -d"
                     sshagent(['ec2-server-key']) {
-                        sh 'scp -o StrictHostKeyChecking=no docker-compose.yaml ubuntu@18.218.157.223:/home/ubuntu/docker-compose.yaml'
-                        sh "ssh -o StrictHostKeyChecking=no ubuntu@18.218.157.223 '${dockerComposeCmd}'"
+                        sh 'scp -o StrictHostKeyChecking=no docker-compose.yaml ubuntu@18.188.170.189:/home/ubuntu/docker-compose.yaml'
+                        sh "ssh -o StrictHostKeyChecking=no ubuntu@18.188.170.189 '${dockerComposeCmd}'"
                     }
                 }
             }
