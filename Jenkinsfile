@@ -38,8 +38,8 @@ pipeline {
                         sh 'scp -o StrictHostKeyChecking=no docker-compose.yaml ubuntu@18.188.170.189:/home/ubuntu/docker-compose.yaml'
                         sh 'scp -o StrictHostKeyChecking=no ./backend/.env.docker ubuntu@18.188.170.189:/home/ubuntu/'
                         sh 'scp -o StrictHostKeyChecking=no ./frontend/.env.sample ubuntu@18.188.170.189:/home/ubuntu/'
+                        sh 'scp -o StrictHostKeyChecking=no ./backend/data/sample_posts.json ubuntu@18.188.170.189:/home/ubuntu/sample_posts.json'
                         sh "ssh -o StrictHostKeyChecking=no ubuntu@18.188.170.189 '${dockerComposeCmd}'"
-                        sh "ssh -o StrictHostKeyChecking=no ubuntu@18.188.170.189 'docker exec mongoimport mongoimport --db wanderlust --collection posts --file /data/sample_posts.json --jsonArray'"
                     }
                 }
             }
