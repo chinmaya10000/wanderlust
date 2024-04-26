@@ -17,12 +17,12 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'dockerhub-repo', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         dir('./backend') {
                             sh 'docker build -t chinmayapradhan/backend:1.0 .'
-                            sh "echo $PASS | docker login -u $USER --passwd-stdin"
+                            sh "echo $PASS | docker login -u $USER --password-stdin"
                             sh 'docker push chinmayapradhan/backend:1.0'
                         }
                         dir('./frontend') {
                            sh 'docker build -t chinmayapradhan/frotend:1.0 .'
-                           sh "echo $PASS | docker login -u $USER --passwd-stdin"
+                           sh "echo $PASS | docker login -u $USER --password-stdin"
                            sh 'docker push chinmayapradhan/frotend:1.0' 
                         }
                     }
