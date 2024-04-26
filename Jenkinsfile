@@ -37,7 +37,7 @@ pipeline {
                     sshagent(['ec2-server-key']) {
                         sh 'scp -o StrictHostKeyChecking=no docker-compose.yaml ubuntu@18.188.170.189:/home/ubuntu/docker-compose.yaml'
                         sh 'scp -o StrictHostKeyChecking=no ./backend/.env.sample ubuntu@18.188.170.189:/home/ubuntu/'
-                        sh 'scp -o StrictHostKeyChecking=no ./frotend/.env.sample ubuntu@18.188.170.189:/home/ubuntu/'
+                        sh 'scp -o StrictHostKeyChecking=no ./frontend/.env.sample ubuntu@18.188.170.189:/home/ubuntu/'
                         sh "ssh -o StrictHostKeyChecking=no ubuntu@18.188.170.189 '${dockerComposeCmd}'"
                     }
                 }
