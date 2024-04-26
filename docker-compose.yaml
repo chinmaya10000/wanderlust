@@ -20,7 +20,7 @@ services:
 
   frontend:
     container_name: frontend
-    image: chinmayapradhan/frotend:1.0
+    image: chinmayapradhan/frontend:1.0
     env_file:
       - ./.env.sample
     ports:
