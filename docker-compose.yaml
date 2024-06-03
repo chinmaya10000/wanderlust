@@ -35,12 +35,4 @@ services:
     depends_on:
       - mongodb
 
-  mongoimport:
-    container_name: mongoimport
-    image: mongo:latest
-    volumes:
-      - ./backend/data:/data
-    depends_on:
-      - mongodb
-    command: ["mongoimport", "--host", "mongodb", "--db", "wanderlust", "--collection", "posts", "--file", "/data/sample_posts.json", "--jsonArray"]
-    entrypoint: []
+  
