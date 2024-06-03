@@ -10,7 +10,7 @@ services:
 
   backend:
     container_name: backend
-    image: chinmayapradhan/backend:1.0
+    build: ./backend
     env_file:
       - ./.env.docker
     ports:
@@ -20,7 +20,7 @@ services:
 
   frontend:
     container_name: frontend
-    image: chinmayapradhan/frontend:1.0
+    build: ./frontend
     env_file:
       - ./.env.sample
     ports:
@@ -44,4 +44,3 @@ services:
       - mongodb
     command: ["mongoimport", "--host", "mongodb", "--db", "wanderlust", "--collection", "posts", "--file", "/sample_posts.json", "--jsonArray"]
     entrypoint: []
-
