@@ -42,5 +42,5 @@ services:
       - ./backend/data:/data
     depends_on:
       - mongodb
-    command: ["mongoimport", "--host", "mongodb", "--db", "wanderlust", "--collection", "posts", "--file", "/data/sample_posts.json", "--jsonArray"]
-    entrypoint: []
+    command: ["mongoimport", "--host", "mongodb", "--db", "wanderlust", "--collection", "posts", "--file", "./data/sample_posts.json", "--jsonArray"]
+    restart: "on-failure"
