@@ -7,7 +7,7 @@ services:
       - ./backend/data:/data
     ports:
       - "27017:27017"
-    entrypoint: ["/bin/bash", "-c", "mongod --bind_ip_all --fork --logpath /var/log/mongod.log && /data/init-mongo.sh && tail -f /var/log/mongod.log"]
+    command: ["mongod", "--bind_ip_all"]
 
   backend:
     container_name: backend
@@ -36,5 +36,11 @@ services:
     depends_on:
       - mongodb
 
-volumes:
-  data:
+  mongoimport:
+    container_name: mongoimport
+    image: mongo:latest
+    volumes:
+      - ./backend/data:/data
+    depends_on:
+      - mongodb
+    entrypoint: ["/bin/sh", "-c", "sleep 10 && mongoimport --host mongodb --db wanderlust --collection posts --file /data/sample_posts.json --jsonArray"]
