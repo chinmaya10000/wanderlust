@@ -7,6 +7,7 @@ services:
       - ./backend/data:/data
     ports:
       - "27017:27017"
+    entrypoint: ["/bin/bash", "-c", "mongod --bind_ip_all --fork --logpath /var/log/mongod.log && /data/init-mongo.sh && tail -f /var/log/mongod.log"]
 
   backend:
     container_name: backend
